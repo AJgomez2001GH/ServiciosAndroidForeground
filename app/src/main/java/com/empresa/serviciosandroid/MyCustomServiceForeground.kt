@@ -56,13 +56,9 @@ class MyCustomServiceForeground: Service() {
         println("***************Servicio iniciado***************")
         Log.d("ServiceForeground", "***************Servicio iniciado***************")
 
-        //Puedes agregar hilos O CORRUTINAS para hacer ejecuciones indefinidas
-        serviceScope.launch {
-            while (true) {
-                Log.d("Service", "Trabajando...")
-                delay(3000) // Esta es cancelable, no lanza excepción fea
-            }
-        }
+        //Puedes agregar hilos o corrutinas para hacer ejecuciones indefinidas
+        corrutina()
+
         //Le dice a Android que reanude automáticamente el servicio si lo mata (ideal para servicios importantes).
         return START_STICKY
     }
@@ -75,4 +71,15 @@ class MyCustomServiceForeground: Service() {
 
 
     override fun onBind(intent: Intent?): IBinder? = null
+}
+
+
+
+fun corrutina(){
+    serviceScope.launch {
+        while (true) {
+            Log.d("Service", "Trabajando...")
+            delay(3000) // Esta es cancelable, no lanza excepción fea
+        }
+    }
 }
